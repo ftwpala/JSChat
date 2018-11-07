@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Chat</title>
+</head>
+<body ng-app="angularMessages" class="">
+    <div ng-cloak id="chat" ng-controller="ClientController">
+        <div id="chat-output">
+            <div ng-class="{'hidden' : changeNickName === false ,'visible' : changeNickName === true}" ng-repeat="messageItem in chatMessages track by $index">
+                <div class="msg-chat" ng-class="{'i-am-mentioned' : amiMentioned(messageItem), 'msg-own' : isMyOwnMessage(messageItem)}">
+                    <span ng-class="textBefore(messageItem)">
+                        {{messageItem.displayNickname}}
+                    </span>
+                    <span>
+                        {{messageItem.messageData}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <form ng-class="{'hidden' : changeNickName === true ,'visible' : changeNickName === false}" ng-submit="submitNickName()">
+            <div class="nick-box"> 
+                <div class="nick-box-error">
+                    <div class="invalid-nick-name-text" ng-class="{'hidden' : showNicknameError === false ,'visible' : showNicknameError === true}">{{showNicknameErrorMessage}}</div>
+                </div>
+                <br>
+                <div class="nick-box-usage">
+                    <input class="nick-box-input" placeholder="Nickname" id="nickName" ng-model="nickName" autocomplete="off" /><button class="nick-box-button" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+        <form ng-class="{'hidden' : changeNickName === false,'visible' : changeNickName === true}" ng-submit="submitMessage()">
+            <input id="messageBox" name="messageBox" ng-model="message" autocomplete="off" placeholder="Write something to the chat! Use another user's name to highlight them!" /><button type="submit">Send</button>
+        </form>
+    </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/controller/clientController.js"></script>
+</body>
+</html>
