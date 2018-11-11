@@ -82,14 +82,8 @@ app.controller("ClientController", function ($scope) {
         var userList = $scope.userList;
         var cleanNickName = cleanString(nickName);
         if (cleanNickName === nickName) {
-            var nameIsUnique = true;
-            for (var i = 0; i < userList.length; i++) {
-                if (nickName === userList[i].nickName) {
-                    nameIsUnique = false;
-                }
-            }
-
-            if (nameIsUnique) {
+            var nameIsUnique = userList.filter(u => u.nickName === cleanNickName);
+            if (nameIsUnique.length === 0) {
                 return true;
             }
             else {
